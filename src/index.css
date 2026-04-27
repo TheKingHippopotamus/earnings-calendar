@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+/* =============================================================================
+   Design system — semantic tokens. Dark-first.
+============================================================================= */
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Brand */
+  --color-brand-50:  #ecf0ff;
+  --color-brand-100: #d9e1ff;
+  --color-brand-200: #b8c5ff;
+  --color-brand-300: #8aa0ff;
+  --color-brand-400: #5b75ff;
+  --color-brand-500: #3a55ff;
+  --color-brand-600: #2939db;
+  --color-brand-700: #1f2cad;
+  --color-brand-800: #1c2787;
+  --color-brand-900: #1a236b;
+
+  /* Verdicts */
+  --color-bull-400: #34d399;
+  --color-bull-500: #10b981;
+  --color-bull-600: #059669;
+  --color-bear-400: #f87171;
+  --color-bear-500: #ef4444;
+  --color-bear-600: #dc2626;
+  --color-warn-400: #fbbf24;
+  --color-warn-500: #f59e0b;
+  --color-warn-600: #d97706;
+}
+
+/* CSS variables for surface tokens; switched by .dark on <html>. */
+:root {
+  --bg-app: #f7f8fb;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f1f3f9;
+  --bg-elev: #ffffff;
+  --border-soft: #e6e8ef;
+  --border-strong: #d6d9e1;
+  --text-primary: #0d1117;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --shadow-soft: 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
+}
+
+.dark {
+  --bg-app: #0b0d12;
+  --bg-surface: #11141b;
+  --bg-surface-2: #161a23;
+  --bg-elev: #1a1f2b;
+  --border-soft: #1f2533;
+  --border-strong: #2a3142;
+  --text-primary: #e6e9f0;
+  --text-secondary: #9aa3b2;
+  --text-muted: #6b7385;
+  --shadow-soft: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 8px 24px -6px rgba(0, 0, 0, 0.4), 0 4px 8px -2px rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html, body, #root { height: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--bg-app);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior-y: none;
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 6px;
+    border: 2px solid var(--bg-app);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* Focus */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--color-brand-600);
+    color: #fff;
+  }
+
+  button { font-family: inherit; }
+}
+
+/* =============================================================================
+   Reusable utility classes
+============================================================================= */
+@layer components {
+  .surface {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-soft);
+  }
+  .surface-2 {
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-soft);
+  }
+  .elev {
+    background: var(--bg-elev);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-card);
+  }
+  .text-secondary { color: var(--text-secondary); }
+  .text-muted     { color: var(--text-muted); }
+  .border-soft    { border-color: var(--border-soft); }
+  .border-strong  { border-color: var(--border-strong); }
+  .bg-app         { background: var(--bg-app); }
+  .bg-surface     { background: var(--bg-surface); }
+  .bg-surface-2   { background: var(--bg-surface-2); }
+  .bg-elev        { background: var(--bg-elev); }
+
+  .num {
+    font-feature-settings: "tnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Animated gradient for hero accents */
+  .grad-bull {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  }
+  .grad-bear {
+    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+  }
+  .grad-brand {
+    background: linear-gradient(135deg, #2939db 0%, #5b75ff 100%);
+  }
+
+  /* Glass surface for floating elements */
+  .glass {
+    background: color-mix(in oklab, var(--bg-elev) 80%, transparent);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border: 1px solid var(--border-soft);
+  }
+
+  /* Quality bar gradient */
+  .quality-bar {
+    background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+  }
+
+  .pulse-dot {
+    position: relative;
+    display: inline-block;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+  }
+  .pulse-dot::after {
+    content: "";
+    position: absolute; inset: -2px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.4;
+    animation: pulse 1.6s cubic-bezier(0,0,.2,1) infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(.7); opacity: .6; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  /* Skeleton */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-surface-2);
+    border-radius: 6px;
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      color-mix(in oklab, var(--text-primary) 8%, transparent) 50%,
+      transparent 100%);
+    animation: shimmer 1.4s infinite;
+  }
+  @keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* Hide scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  /* Safe area for notch/island */
+  .safe-top    { padding-top:    env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
